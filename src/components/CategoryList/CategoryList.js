@@ -2,8 +2,10 @@ import React from "react";
 import CategoryListItem from "./CategoryListItem";
 
 const CategoryList = ({ categories, selectedCategory, onCategoryClick }) => {
+  // If the current category is already selected, deselect it
   const handleClick = (category) => {
-    onCategoryClick(category);
+    const newSelectedCategory = category === selectedCategory ? null : category;
+    onCategoryClick(newSelectedCategory);
   };
 
   return (
