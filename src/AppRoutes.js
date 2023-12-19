@@ -1,8 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter as Route,
-  Routes as RoutesContainer,
-} from "react-router-dom";
+import { Route, Routes as RoutesContainer } from "react-router-dom";
 import ProductList from "./components/ProductList/ProductList";
 import ProductDetail from "./components/ProductDetail/ProductDetail";
 import CategoryList from "./components/CategoryList/CategoryList";
