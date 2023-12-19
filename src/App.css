@@ -1,11 +1,7 @@
-body {
-  margin: 20px;
-}
-
 .product-list {
   display: grid;
   gap: 20px;
-  grid-auto-flow: row; /* This allows elements to flow into a new row when there is not enough space in the column */
+  grid-auto-flow: row; /* This allows items to flow into a new row when there's not enough space in the column */
 }
 
 /* Responsive styles */
