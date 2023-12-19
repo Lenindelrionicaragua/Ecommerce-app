@@ -1,6 +1,6 @@
 [build]
   command = "npm run build"
-  publish = "build"  # Ajusta esto a la carpeta correcta
+  publish = ".next"  # Corregido para apuntar a la carpeta .next
 
 [context.production.environment]
   NODE_VERSION = "14"
