@@ -1,7 +1,6 @@
 import React from "react";
 import {
-  BrowserRouter as Router,
-  Route,
+  BrowserRouter as Route,
   Routes as RoutesContainer,
 } from "react-router-dom";
 import ProductList from "./components/ProductList/ProductList";
