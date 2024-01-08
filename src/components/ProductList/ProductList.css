@@ -1,0 +1,14 @@
+/* ProductList.css */
+.product-link {
+  position: relative;
+}
+
+.product-item {
+  position: relative;
+}
+
+.product-item .heart-icon-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

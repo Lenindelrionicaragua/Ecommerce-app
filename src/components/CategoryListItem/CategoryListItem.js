@@ -1,4 +1,5 @@
 import React from "react";
+import { useFavorites } from "../../context/FavoritesContext";
 
 const CategoryListItem = ({ category, isSelected, onClick }) => (
   <li

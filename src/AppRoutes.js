@@ -3,6 +3,8 @@ import { Route, Routes as RoutesContainer } from "react-router-dom";
 import ProductList from "./components/ProductList/ProductList";
 import ProductDetail from "./components/ProductDetail/ProductDetail";
 import CategoryList from "./components/CategoryList/CategoryList";
+import FavoritesPage from "./components/FavoritesPage/FavoritesPage"; // Importa la nueva página de favoritos
+import { useFavorites } from "../src/context/FavoritesContext";
 
 const AppRoutes = ({
   categories,
@@ -53,6 +55,16 @@ const AppRoutes = ({
           selectedCategory={selectedCategory}
           setSelectedProduct={setSelectedProduct}
           products={products}
+        />
+      }
+    />
+
+    {/* Route for displaying the user's favorite products */}
+    <Route
+      path="/favorites"
+      element={
+        <FavoritesPage
+        // You may pass necessary props for the FavoritesPage
         />
       }
     />

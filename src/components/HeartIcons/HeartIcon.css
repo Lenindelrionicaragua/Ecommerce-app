@@ -1,0 +1,9 @@
+.heart-icon-container {
+  display: inline-block;
+}
+
+.heart-icon {
+  margin-left: 5px;
+  width: 20px;
+  height: 20px;
+}

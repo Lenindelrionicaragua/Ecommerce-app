@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getProducts } from "../../services/api";
+import { useFavorites } from "../../context/FavoritesContext";
+import HeartRegularIcon from "../HeartIcons/HeartRegularIcon";
+import HeartSolidIcon from "../HeartIcons/HeartSolidIcon";
+import "./ProductList.css";
 
 const ProductList = ({ selectedCategory, onProductClick }) => {
+  const { isFavorite, addFavorite, removeFavorite } = useFavorites();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,17 +28,23 @@ const ProductList = ({ selectedCategory, onProductClick }) => {
   }, [selectedCategory]);
 
   const handleProductClick = (product) => {
-    // Ensure that onProductClick is a function before invoking it
     if (typeof onProductClick === "function") {
       onProductClick(product);
     }
   };
 
-  // Create a constant render function for a cleaner return statement
+  const handleFavoriteClick = (productId) => {
+    if (isFavorite(productId)) {
+      removeFavorite(productId);
+    } else {
+      addFavorite(productId);
+    }
+  };
+
   const renderProductList = () => (
     <ul className="product-list">
       {products.map((product, index) => (
-        <li key={index}>
+        <li key={index} className="product-item">
           <Link to={`/product/${product.id}`}>
             <button
               type="button"
@@ -48,12 +59,21 @@ const ProductList = ({ selectedCategory, onProductClick }) => {
               <h3>{product.title}</h3>
             </button>
           </Link>
+          {/* Heart Icon */}
+          <div className="heart-icon-container">
+            {isFavorite(product.id) ? (
+              <HeartSolidIcon onClick={() => handleFavoriteClick(product.id)} />
+            ) : (
+              <HeartRegularIcon
+                onClick={() => handleFavoriteClick(product.id)}
+              />
+            )}
+          </div>
         </li>
       ))}
     </ul>
   );
 
-  // Use the renderProductList constant for a cleaner return statement
   return (
     <div>
       {loading ? (

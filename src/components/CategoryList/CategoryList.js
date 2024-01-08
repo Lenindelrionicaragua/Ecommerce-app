@@ -1,5 +1,6 @@
 import React from "react";
 import CategoryListItem from "../CategoryListItem/CategoryListItem";
+import { useFavorites } from "../../context/FavoritesContext";
 
 const CategoryList = ({ categories, selectedCategory, onCategoryClick }) => {
   const handleClick = (category) => {

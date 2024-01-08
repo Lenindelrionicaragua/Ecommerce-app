@@ -5,6 +5,7 @@ import AppRoutes from "./AppRoutes";
 import "./App.css";
 import "./styles/ProductList.css";
 import "./styles/CategoryList.css";
+import { FavoritesProvider } from "./context/FavoritesContext";
 
 import { getCategories, getProducts } from "./services/api";
 
@@ -26,7 +27,7 @@ const App = () => {
         setAllProducts(productsData);
         setLoading(false);
       } catch (error) {
-        setError("Error fetching data");
+        setError(`Error fetching data: ${error.message}`);
         setLoading(false);
       }
     };
@@ -67,11 +68,13 @@ const App = () => {
 
   return (
     <Router>
-      <div className="App">
-        <header className="App-header">
-          {renderLoadingOrError() || renderHeader()}
-        </header>
-      </div>
+      <FavoritesProvider>
+        <div className="App">
+          <header className="App-header">
+            {renderLoadingOrError() || renderHeader()}
+          </header>
+        </div>
+      </FavoritesProvider>
     </Router>
   );
 };

@@ -39,6 +39,16 @@
 .product-description p {
   font-size: 18px;
 }
+/* ProductDetail.css */
+.product-content {
+  position: relative;
+}
+
+.product-content .heart-icon-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 
 @media (max-width: 576px) {
   .product-content {
