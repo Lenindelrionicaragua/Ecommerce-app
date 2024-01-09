@@ -37,6 +37,8 @@ const ProductList = ({
   }, [selectedCategory, fetchData]);
 
   const handleProductClick = async (product) => {
+    console.log("Product clicked:", product);
+
     if (typeof onProductClick === "function") {
       onProductClick({
         id: product.id,
@@ -57,7 +59,13 @@ const ProductList = ({
     }
   };
 
-  const handleFavoriteClick = (productId) => {
+  const handleFavoriteClick = (event, productId) => {
+    // Evitar la propagación del evento para prevenir la navegación
+    event.preventDefault();
+    event.stopPropagation();
+
+    console.log("Favorite button clicked for product ID:", productId);
+
     if (isFavorite(productId)) {
       removeFavorite(productId);
     } else {
@@ -70,7 +78,10 @@ const ProductList = ({
       {products.map((product, index) => (
         <li key={index} className="product-item">
           <Link to={`/product/${product.id}`}>
-            <div className="product-container">
+            <div
+              className="product-container"
+              onClick={() => handleProductClick(product)}
+            >
               <img
                 src={product.image}
                 alt={product.title}
@@ -81,11 +92,11 @@ const ProductList = ({
               <div className="heart-icon-container">
                 {isFavorite(product.id) ? (
                   <HeartSolidIcon
-                    onClick={() => handleFavoriteClick(product.id)}
+                    onClick={(event) => handleFavoriteClick(event, product.id)}
                   />
                 ) : (
                   <HeartRegularIcon
-                    onClick={() => handleFavoriteClick(product.id)}
+                    onClick={(event) => handleFavoriteClick(event, product.id)}
                   />
                 )}
               </div>
