@@ -27,20 +27,17 @@ const App = () => {
     }
   }, [categoriesData, categoriesLoading]);
 
-  // Fetch products data based on selected category
-  const { data: productsData, loading: productsLoading } = useFetch(
-    selectedCategory
-      ? `https://fakestoreapi.com/products/category/${selectedCategory}`
-      : "https://fakestoreapi.com/products",
-    selectedCategory !== null
+  // Fetch all products data (remove the conditional check)
+  const { data: allProductsData, loading: allProductsLoading } = useFetch(
+    "https://fakestoreapi.com/products"
   );
 
   // Update allProducts state after fetching data
   useEffect(() => {
-    if (!productsLoading) {
-      setAllProducts(productsData);
+    if (!allProductsLoading) {
+      setAllProducts(allProductsData);
     }
-  }, [productsData, productsLoading]);
+  }, [allProductsData, allProductsLoading]);
 
   // Handle category click event
   const handleCategoryClick = (category) => {
@@ -67,8 +64,8 @@ const App = () => {
             categories={categories}
             selectedCategory={selectedCategory}
             setSelectedProduct={() => {}}
-            // Display all products or limit to first 5 based on the selected category
-            products={selectedCategory ? allProducts : allProducts.slice(0, 5)}
+            // Pass allProducts directly without slicing
+            products={allProducts}
             handleCategoryClick={handleCategoryClick}
           />
         </div>
