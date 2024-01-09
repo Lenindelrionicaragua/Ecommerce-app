@@ -1,35 +1,59 @@
+// ProductList.js
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getProducts } from "../../services/api";
 import { useFavorites } from "../../context/FavoritesContext";
 import HeartRegularIcon from "../HeartIcons/HeartRegularIcon";
 import HeartSolidIcon from "../HeartIcons/HeartSolidIcon";
+import useFetch from "../../hooks/useFetch";
 import "./ProductList.css";
 
-const ProductList = ({ selectedCategory, onProductClick }) => {
+const ProductList = ({
+  selectedCategory,
+  onProductClick,
+  setSelectedProduct,
+}) => {
   const { isFavorite, addFavorite, removeFavorite } = useFavorites();
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const {
+    data: productsData,
+    loading,
+    error,
+    fetchData,
+  } = useFetch(
+    selectedCategory
+      ? `https://fakestoreapi.com/products/category/${selectedCategory}`
+      : "https://fakestoreapi.com/products",
+    selectedCategory !== null
+  );
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const productsData = await getProducts(selectedCategory);
-        setProducts(productsData);
-        setLoading(false);
-      } catch (error) {
-        setError("Error fetching products");
-        setLoading(false);
-      }
-    };
+    if (productsData.length > 0) {
+      setProducts(productsData);
+    }
+  }, [productsData]);
 
-    fetchData();
-  }, [selectedCategory]);
+  useEffect(() => {
+    fetchData(); // Se llama al fetch cuando cambia selectedCategory
+  }, [selectedCategory, fetchData]);
 
-  const handleProductClick = (product) => {
+  const handleProductClick = async (product) => {
     if (typeof onProductClick === "function") {
-      onProductClick(product);
+      onProductClick({
+        id: product.id,
+        title: product.title,
+        description: product.description,
+        image: product.image,
+      });
+    }
+
+    if (selectedCategory) {
+      // Si hay una categoría seleccionada, actualizamos los productos
+      await fetchData();
+      setProducts(productsData);
+    }
+
+    if (!selectedCategory && typeof setSelectedProduct === "function") {
+      setSelectedProduct(product);
     }
   };
 
@@ -46,29 +70,27 @@ const ProductList = ({ selectedCategory, onProductClick }) => {
       {products.map((product, index) => (
         <li key={index} className="product-item">
           <Link to={`/product/${product.id}`}>
-            <button
-              type="button"
-              onClick={() => handleProductClick(product)}
-              className="product-link"
-            >
+            <div className="product-container">
               <img
                 src={product.image}
                 alt={product.title}
                 className="product-image"
               />
               <h3>{product.title}</h3>
-            </button>
+              {/* Heart Icon */}
+              <div className="heart-icon-container">
+                {isFavorite(product.id) ? (
+                  <HeartSolidIcon
+                    onClick={() => handleFavoriteClick(product.id)}
+                  />
+                ) : (
+                  <HeartRegularIcon
+                    onClick={() => handleFavoriteClick(product.id)}
+                  />
+                )}
+              </div>
+            </div>
           </Link>
-          {/* Heart Icon */}
-          <div className="heart-icon-container">
-            {isFavorite(product.id) ? (
-              <HeartSolidIcon onClick={() => handleFavoriteClick(product.id)} />
-            ) : (
-              <HeartRegularIcon
-                onClick={() => handleFavoriteClick(product.id)}
-              />
-            )}
-          </div>
         </li>
       ))}
     </ul>

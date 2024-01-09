@@ -1,3 +1,4 @@
+// ProductDetail.js
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./ProductDetail.css";
@@ -9,23 +10,39 @@ const ProductDetail = ({ products, setSelectedProduct }) => {
   const { id } = useParams();
   const { isFavorite, addFavorite, removeFavorite } = useFavorites();
 
-  // Verifica si products es un array antes de usar find
-  const product = Array.isArray(products)
-    ? products.find((product) => product.id === parseInt(id))
-    : null;
-
   useEffect(() => {
-    if (product) {
-      setSelectedProduct(product);
+    console.log("Products in ProductDetail:", products);
+
+    if (products.length === 0) {
+      console.log("No products available");
+      return;
     }
 
-    // Clean up the selected product when the component is unmounted
+    const product = products.find((product) => product.id === parseInt(id));
+
+    if (!product) {
+      console.log("Product not found");
+      return;
+    }
+
+    console.log("Selected Product:", product);
+    setSelectedProduct(product);
+
     return () => {
+      console.log("Component Unmounted, Clearing Selected Product");
       setSelectedProduct(null);
     };
-  }, [product, setSelectedProduct]);
+  }, [id, products, setSelectedProduct]);
+
+  if (products.length === 0) {
+    console.log("No products available");
+    return <p>No products available</p>;
+  }
+
+  const product = products.find((product) => product.id === parseInt(id));
 
   if (!product) {
+    console.log("Product not found");
     return <p>Product not found</p>;
   }
 

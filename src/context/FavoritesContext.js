@@ -1,5 +1,3 @@
-// FavoritesContext.js
-
 import React, { createContext, useContext, useState, useCallback } from "react";
 
 const FavoritesContext = createContext();

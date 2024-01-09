@@ -1,3 +1,4 @@
+// App.js
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import AppRoutes from "./AppRoutes";
@@ -5,7 +6,6 @@ import "./App.css";
 import "./styles/ProductList.css";
 import "./styles/CategoryList.css";
 import { FavoritesProvider } from "./context/FavoritesContext";
-import FavoritesPage from "./components/FavoritesPage/FavoritesPage";
 import useFetch from "./hooks/useFetch";
 
 const App = () => {
@@ -15,16 +15,18 @@ const App = () => {
   const [allProducts, setAllProducts] = useState([]);
 
   // Fetch categories data using custom hook
-  const { data: categoriesData } = useFetch(
+  const { data: categoriesData, loading: categoriesLoading } = useFetch(
     "https://fakestoreapi.com/products/categories"
   );
 
   useEffect(() => {
-    setCategories(categoriesData);
-  }, [categoriesData]);
+    if (!categoriesLoading) {
+      setCategories(categoriesData);
+    }
+  }, [categoriesData, categoriesLoading]);
 
   // Fetch products data using custom hook
-  const { data: productsData } = useFetch(
+  const { data: productsData, loading: productsLoading } = useFetch(
     selectedCategory
       ? `https://fakestoreapi.com/products/category/${selectedCategory}`
       : "https://fakestoreapi.com/products",
@@ -32,8 +34,10 @@ const App = () => {
   );
 
   useEffect(() => {
-    setAllProducts(productsData);
-  }, [productsData]);
+    if (!productsLoading) {
+      setAllProducts(productsData);
+    }
+  }, [productsData, productsLoading]);
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
@@ -53,10 +57,9 @@ const App = () => {
         categories={categories}
         selectedCategory={selectedCategory}
         setSelectedProduct={setSelectedProduct}
-        products={allProducts}
+        products={selectedCategory ? allProducts : allProducts.slice(0, 5)} // Usamos todos los productos o solo algunos cuando no hay categoría seleccionada
         handleCategoryClick={handleCategoryClick}
       />
-      <FavoritesPage />
     </>
   );
 

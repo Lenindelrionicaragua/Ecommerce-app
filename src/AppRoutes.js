@@ -1,3 +1,4 @@
+// AppRoutes.js
 import React from "react";
 import { Route, Routes as RoutesContainer } from "react-router-dom";
 import ProductList from "./components/ProductList/ProductList";
