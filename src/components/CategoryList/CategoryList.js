@@ -1,14 +1,14 @@
 import React from "react";
 import CategoryListItem from "../CategoryListItem/CategoryListItem";
-import { useFavorites } from "../../context/FavoritesContext";
 
 const CategoryList = ({ categories, selectedCategory, onCategoryClick }) => {
-  // Verifica si categories es un array antes de llamar a map
+  // Verifies if categories is an array before calling map
   if (!Array.isArray(categories)) {
     console.error("Categories is not an array:", categories);
-    return null; // o manejar el caso de que categories no sea un array
+    return null;
   }
 
+  // Handles click on a category item, toggling the selected state.
   const handleClick = (category) => {
     const newSelectedCategory = category === selectedCategory ? null : category;
     onCategoryClick(newSelectedCategory);

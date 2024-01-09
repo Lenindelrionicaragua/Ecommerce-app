@@ -1,4 +1,3 @@
-// ProductList.js
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useFavorites } from "../../context/FavoritesContext";
@@ -33,7 +32,7 @@ const ProductList = ({
   }, [productsData]);
 
   useEffect(() => {
-    fetchData(); // Se llama al fetch cuando cambia selectedCategory
+    fetchData(); // Fetch when selectedCategory changes
   }, [selectedCategory, fetchData]);
 
   const handleProductClick = async (product) => {
@@ -49,7 +48,7 @@ const ProductList = ({
     }
 
     if (selectedCategory) {
-      // Si hay una categoría seleccionada, actualizamos los productos
+      // If there's a selected category, update the products
       await fetchData();
       setProducts(productsData);
     }
@@ -60,7 +59,7 @@ const ProductList = ({
   };
 
   const handleFavoriteClick = (event, productId) => {
-    // Evitar la propagación del evento para prevenir la navegación
+    // Prevent event propagation to avoid navigation
     event.preventDefault();
     event.stopPropagation();
 

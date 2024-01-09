@@ -1,4 +1,3 @@
-// ProductDetail.js
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./ProductDetail.css";
@@ -11,38 +10,37 @@ const ProductDetail = ({ products, setSelectedProduct }) => {
   const { isFavorite, addFavorite, removeFavorite } = useFavorites();
 
   useEffect(() => {
-    console.log("Products in ProductDetail:", products);
-
+    // Effect to handle product selection and cleanup on component mount and unmount
     if (products.length === 0) {
-      console.log("No products available");
       return;
     }
 
+    // Find the selected product based on the URL parameter 'id'
     const product = products.find((product) => product.id === parseInt(id));
 
     if (!product) {
-      console.log("Product not found");
       return;
     }
 
-    console.log("Selected Product:", product);
+    // Set the selected product
     setSelectedProduct(product);
 
+    // Cleanup function to clear the selected product on component unmount
     return () => {
-      console.log("Component Unmounted, Clearing Selected Product");
       setSelectedProduct(null);
     };
   }, [id, products, setSelectedProduct]);
 
+  // Check if products are not available
   if (products.length === 0) {
-    console.log("No products available");
     return <p>No products available</p>;
   }
 
+  // Find the product based on the URL parameter 'id'
   const product = products.find((product) => product.id === parseInt(id));
 
+  // Check if the product is not found
   if (!product) {
-    console.log("Product not found");
     return <p>Product not found</p>;
   }
 
@@ -52,8 +50,9 @@ const ProductDetail = ({ products, setSelectedProduct }) => {
     <div className="product-detail-container">
       <div className="product-content">
         <div className="product-description">
+          {/* Display product description */}
           <p className="vertical-center">{description}</p>
-          {/* Heart Icon */}
+          {/* Heart Icon for adding/removing from favorites */}
           <div className="heart-icon-container">
             {isFavorite(product.id) ? (
               <HeartSolidIcon onClick={() => removeFavorite(product.id)} />
@@ -63,6 +62,7 @@ const ProductDetail = ({ products, setSelectedProduct }) => {
           </div>
         </div>
         <div className="product-image">
+          {/* Display product image */}
           <img className="product-detail-image" src={image} alt={title} />
         </div>
       </div>

@@ -25,7 +25,7 @@
 
 .product-link {
   color: #0077cc;
-  text-decoration: underline; /* Subrayado siempre presente */
+  text-decoration: underline;
   cursor: pointer;
   background-color: white;
   border: none;

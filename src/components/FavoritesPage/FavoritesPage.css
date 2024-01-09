@@ -1,0 +1,25 @@
+/* FavoritesPage.css */
+.favorites-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: nowrap; /* Evitar que los elementos se envuelvan a la siguiente línea */
+  justify-content: space-between; /* Distribuir los elementos a lo largo del contenedor */
+}
+
+.favorites-item {
+  margin: 10px;
+  text-align: center;
+  position: relative;
+}
+
+.favorites-image {
+  max-width: 100px; /* Ajusta el tamaño según sea necesario */
+  height: auto;
+}
+
+.heart-icon-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

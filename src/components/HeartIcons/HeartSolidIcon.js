@@ -1,4 +1,3 @@
-// HeartSolidIcon.js
 import React from "react";
 import heartSolidIcon from "../../assets/heart-solid.svg";
 import "./HeartIcon.css";

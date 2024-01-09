@@ -1,5 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
 
+/**
+ * Custom hook for fetching data from an API.
+ * @param {string} url - The URL of the API endpoint to fetch data from.
+ * @returns {Object} An object containing data, loading state, error, and a function to refetch data.
+ */
 const useFetch = (url) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
