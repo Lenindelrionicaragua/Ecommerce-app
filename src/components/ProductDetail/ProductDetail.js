@@ -8,7 +8,11 @@ import HeartSolidIcon from "../HeartIcons/HeartSolidIcon";
 const ProductDetail = ({ products, setSelectedProduct }) => {
   const { id } = useParams();
   const { isFavorite, addFavorite, removeFavorite } = useFavorites();
-  const product = products.find((product) => product.id === parseInt(id));
+
+  // Verifica si products es un array antes de usar find
+  const product = Array.isArray(products)
+    ? products.find((product) => product.id === parseInt(id))
+    : null;
 
   useEffect(() => {
     if (product) {

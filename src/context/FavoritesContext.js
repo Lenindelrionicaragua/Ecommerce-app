@@ -1,25 +1,24 @@
-import React, { createContext, useContext, useState } from "react";
+// FavoritesContext.js
+
+import React, { createContext, useContext, useState, useCallback } from "react";
 
 const FavoritesContext = createContext();
-
-export const useFavorites = () => {
-  return useContext(FavoritesContext);
-};
 
 export const FavoritesProvider = ({ children }) => {
   const [favoriteIds, setFavoriteIds] = useState([]);
 
-  const addFavorite = (productId) => {
+  const addFavorite = useCallback((productId) => {
     setFavoriteIds((prevIds) => [...prevIds, productId]);
-  };
+  }, []);
 
-  const removeFavorite = (productId) => {
+  const removeFavorite = useCallback((productId) => {
     setFavoriteIds((prevIds) => prevIds.filter((id) => id !== productId));
-  };
+  }, []);
 
-  const isFavorite = (productId) => {
-    return favoriteIds.includes(productId);
-  };
+  const isFavorite = useCallback(
+    (productId) => favoriteIds.includes(productId),
+    [favoriteIds]
+  );
 
   return (
     <FavoritesContext.Provider
@@ -30,4 +29,10 @@ export const FavoritesProvider = ({ children }) => {
   );
 };
 
-export default FavoritesContext; // Exporting the context for use in other files
+export const useFavorites = () => {
+  const context = useContext(FavoritesContext);
+  if (!context) {
+    throw new Error("useFavorites must be used within a FavoritesProvider");
+  }
+  return context;
+};

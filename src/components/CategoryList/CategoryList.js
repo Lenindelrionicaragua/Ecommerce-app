@@ -3,6 +3,12 @@ import CategoryListItem from "../CategoryListItem/CategoryListItem";
 import { useFavorites } from "../../context/FavoritesContext";
 
 const CategoryList = ({ categories, selectedCategory, onCategoryClick }) => {
+  // Verifica si categories es un array antes de llamar a map
+  if (!Array.isArray(categories)) {
+    console.error("Categories is not an array:", categories);
+    return null; // o manejar el caso de que categories no sea un array
+  }
+
   const handleClick = (category) => {
     const newSelectedCategory = category === selectedCategory ? null : category;
     onCategoryClick(newSelectedCategory);
